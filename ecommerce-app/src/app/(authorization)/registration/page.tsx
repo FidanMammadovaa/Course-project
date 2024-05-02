@@ -17,19 +17,6 @@ export default function Registration() {
 
     const router = useRouter()
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         let token = await getToken()
-    //         console.log(token);
-
-    //         if (token) {
-    //             router.push('/home')
-    //         }
-    //     }
-    //     fetchData()
-    // }, [])
-
-
     useEffect(() => {
         const fetchData = async () => {
             let token = await getToken()

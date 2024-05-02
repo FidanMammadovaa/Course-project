@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/contexts/AuthContext"
 import { getToken } from "@/functions/storage"
+import { comparePasswords } from "@/functions/validation"
 import { User } from "@/types/User"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -10,7 +11,8 @@ export default function Registration() {
 
     const [user, setUser] = useState<User>({
         email: '',
-        password: ''
+        password: '',
+        repeat: ''
     })
 
     let authContext = useAuth()
@@ -29,6 +31,7 @@ export default function Registration() {
         fetchData()
     }, [authContext])
 
+
     const handleChangeEmail = (email: string) => {
         setUser((prev) => ({ ...prev, email: email }))
     }
@@ -37,13 +40,22 @@ export default function Registration() {
         setUser((prev) => ({ ...prev, password: password }))
     }
 
-    const handleRegister = async () => {
-        await authContext.fetchSignUpUser(user)
-        let token = await getToken()
+    const handleChangeRepeat = (repeat: string) => {
+        setUser((prev) => ({ ...prev, repeat: repeat }))
+    }
 
-        if (token) {
-            router.push('/home')
+    const handleRegister = async () => {
+        if (comparePasswords(user) === true) {
+            await authContext.fetchSignUpUser(user)
+            let token = await getToken()
+            if (token) {
+                router.push('/home')
+            }
         }
+        else {
+            console.log("Passwords aren't the same");
+        }
+
     }
 
 
@@ -59,6 +71,11 @@ export default function Registration() {
                 value={user.password}
                 onChange={(e) => handleChangePassword(e.target.value)}
                 placeholder="Enter password" />
+            <input
+                type="password"
+                value={user.repeat}
+                onChange={(e) => handleChangeRepeat(e.target.value)}
+                placeholder="Repeat password" />
             <button onClick={handleRegister}>Register</button>
         </div>
     )

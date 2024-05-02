@@ -54,7 +54,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
                 }
             }
         }
-        catch (error) {
+        catch (error) {            
             console.log("Error occured: ", error);
             throw error;
         }

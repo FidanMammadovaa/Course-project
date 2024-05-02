@@ -2,22 +2,39 @@
 
 import { useAuth } from "@/contexts/AuthContext"
 import { getToken } from "@/functions/storage"
-import { notFound } from "next/navigation"
+import { notFound, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function Home()
 {
     let authContext = useAuth()
+    const router = useRouter()
+
     useEffect(() => {
-        if (authContext.currentUserId) {
-            let token = getToken(authContext.currentUserId)
+        const fetchData = async () => {
+            let token = await getToken()
+            console.log(token);
+
             if (!token) {
-                return notFound()
+                router.push('/not-found')
             }
         }
+        fetchData()
     }, [authContext])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            let token = await getToken()
+            console.log(token);
 
+            if (!token) {
+                router.push('/not-found')
+            }
+        }
+        fetchData()
+    }, [])
+
+    
     return (
         <div>
             Home

@@ -16,12 +16,31 @@ export default function Login() {
     let authContext = useAuth()
     const router = useRouter()
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         let token = await getToken()
+    //         console.log(token);
+
+    //         if (token) {
+    //             router.push('/home')
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
+
+
     useEffect(() => {
-        let token = getToken()
-        if (token) {
-            router.push('/home')
+        const fetchData = async () => {
+            let token = await getToken()
+            console.log(token);
+
+            if (token) {
+                router.push('/home')
+            }
         }
-    }, [])
+        fetchData()
+    }, [authContext])
+
 
     const handleChangeEmail = (email: string) => {
         setUser((prev) => ({ ...prev, email: email }))
@@ -33,7 +52,10 @@ export default function Login() {
 
     const handleLogin = async () => {
         await authContext.fetchLoginUser(user)
-
+        let token = await getToken()
+        if (token) {
+            router.push('/home')
+        }
     }
 
 

@@ -2,22 +2,28 @@
 
 import { useAuth } from "@/contexts/AuthContext"
 import { getToken } from "@/functions/storage"
-import { notFound } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function LogOut() {
     let authContext = useAuth()
 
+    let router = useRouter()
+
     useEffect(() => {
-        let token = getToken()
-        if (token) {
-            return notFound()
+        const fetchData = async () => {
+            let token = await getToken()
+            if (!token) {
+                router.push('/not-found')
+            }
         }
+        fetchData()
 
     }, [])
 
     const handleLogOut = async () => {
         await authContext.fetchLogout()
+        router.push('/registration')
     }
 
     return (

@@ -49,7 +49,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
                     console.log(token);
 
                     if (token)
-                         setToken(token)
+                        await setToken(token)
 
                 }
             }
@@ -81,7 +81,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
                     console.log(token);
 
                     if (token)
-                         setToken(token)
+                        await setToken(token)
 
                 }
             }
@@ -93,7 +93,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
 
     const fetchLogout = async () => {
-         removeToken()
+        await removeToken()
     }
 
     const contextValue: AuthContextType = { fetchLoginUser, fetchSignUpUser, fetchLogout }

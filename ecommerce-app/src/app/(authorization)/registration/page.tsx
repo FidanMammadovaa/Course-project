@@ -16,14 +16,31 @@ export default function Registration() {
     let authContext = useAuth()
 
     const router = useRouter()
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         let token = await getToken()
+    //         console.log(token);
+
+    //         if (token) {
+    //             router.push('/home')
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
+
+
     useEffect(() => {
-        let token = getToken()
-        if (token) {
-            router.push('/home')
+        const fetchData = async () => {
+            let token = await getToken()
+            console.log(token);
+
+            if (token) {
+                router.push('/home')
+            }
         }
-    }, [])
-
-
+        fetchData()
+    }, [authContext])
 
     const handleChangeEmail = (email: string) => {
         setUser((prev) => ({ ...prev, email: email }))
@@ -35,6 +52,11 @@ export default function Registration() {
 
     const handleRegister = async () => {
         await authContext.fetchSignUpUser(user)
+        let token = await getToken()
+
+        if (token) {
+            router.push('/home')
+        }
     }
 
 

@@ -1,7 +1,9 @@
 'use client'
 
 import { useAuth } from "@/contexts/AuthContext"
+import { getToken } from "@/functions/storage"
 import { User } from "@/types/User"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Login() {
@@ -11,7 +13,15 @@ export default function Login() {
         password: ''
     })
 
-    const authContext = useAuth()
+    let authContext = useAuth()
+    const router = useRouter()
+
+    useEffect(() => {
+        let token = getToken()
+        if (token) {
+            router.push('/home')
+        }
+    }, [])
 
     const handleChangeEmail = (email: string) => {
         setUser((prev) => ({ ...prev, email: email }))
@@ -23,7 +33,7 @@ export default function Login() {
 
     const handleLogin = async () => {
         await authContext.fetchLoginUser(user)
-        
+
     }
 
 

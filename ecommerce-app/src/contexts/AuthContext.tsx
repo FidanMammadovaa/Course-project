@@ -1,13 +1,13 @@
 'use client'
+import { getToken, removeToken, setToken } from "@/functions/storage";
 import { User } from "@/types/User";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 
 type AuthContextType = {
-    userToken: string | null
     fetchSignUpUser: (user: User) => Promise<void>
     fetchLoginUser: (user: User) => Promise<void>
-    fetchSignOut: () => Promise<void>
+    fetchLogout: () => Promise<void>
 }
 
 interface AuthProviderProps {
@@ -17,10 +17,9 @@ interface AuthProviderProps {
 const baseUrl = 'https://localhost:7041/User'
 
 export const AuthContext = createContext<AuthContextType>({
-    userToken: null,
     fetchSignUpUser: async (user: User) => { },
     fetchLoginUser: async (user: User) => { },
-    fetchSignOut: async () => { }
+    fetchLogout: async () => { }
 });
 
 export const useAuth = () => {
@@ -28,7 +27,6 @@ export const useAuth = () => {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [userToken, setUserToken] = useState<string | null>(null)
 
     const fetchSignUpUser = async (user: User) => {
         try {
@@ -45,7 +43,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
             if (response.ok) {
                 const responseData = await response.json()
-                console.log(responseData);
+                if (responseData) {
+                    console.log(responseData);
+                    let token = responseData.token
+                    console.log(token);
+
+                    if (token)
+                         setToken(token)
+
+                }
             }
         }
         catch (error) {
@@ -69,7 +75,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
             if (response.ok) {
                 const responseData = await response.json()
-                console.log(responseData);
+                if (responseData) {
+                    console.log(responseData);
+                    let token = responseData.token
+                    console.log(token);
+
+                    if (token)
+                         setToken(token)
+
+                }
             }
         }
         catch (error) {
@@ -78,11 +92,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
-    const fetchSignOut = async () => {
-
+    const fetchLogout = async () => {
+         removeToken()
     }
 
-    const contextValue: AuthContextType = { userToken, fetchLoginUser, fetchSignUpUser, fetchSignOut }
+    const contextValue: AuthContextType = { fetchLoginUser, fetchSignUpUser, fetchLogout }
     return (
         <AuthContext.Provider value={contextValue}>
             {children}

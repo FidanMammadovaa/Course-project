@@ -14,15 +14,16 @@ export type Product =
 export type ProductVariation = {
     id: number,
     name: string,
-    color: Color
-    productImages: ProductImage,
+    color: Color,
+    product: Product
+    productImages: ProductImage[],
     subProductVariations: SubProductVariation
 }
 
 export type ProductImage = 
 {
     id: number, 
-    imageData: any,
+    imageData: string,
     
 }
 
@@ -34,4 +35,5 @@ export type SubProductVariation =
     totalPrice: number,
     quantity: number,
     discount: number,
+    productVariation: ProductVariation
 }

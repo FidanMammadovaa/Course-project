@@ -1,6 +1,5 @@
 'use client'
 import { Product } from "@/types/Product";
-import { Gender } from "next-auth/providers/kakao";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 
@@ -35,6 +34,7 @@ export default function ProductProvider({ children }: ProductProviderProps) {
             const url = `${baseUrl}/Gender/${gender}`
             const response = await fetch(url)
             const data = await response.json()
+            setProducts(data)
             return data
         }
         catch (error) {

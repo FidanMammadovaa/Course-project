@@ -45,7 +45,7 @@ export default function ProductProvider({ children }: ProductProviderProps) {
             const url = `${baseUrl1}/Gender/${gender}`
             const response = await fetch(url)
             const data = await response.json()
-            setProducts(data)
+            // setProducts(data)
             return data
         }
         catch (error) {

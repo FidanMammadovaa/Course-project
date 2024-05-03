@@ -1,5 +1,6 @@
 'use client'
 
+import { useCart } from "@/contexts/CartContext"
 import { useProductContext } from "@/contexts/ProductContext"
 import { Color } from "@/types/Color"
 import { ProductVariation, SubProductVariation } from "@/types/Product"
@@ -16,12 +17,12 @@ interface Props {
 export default function ProductDetails({ params }: Props) {
 
     let { id } = params
-    let [productVariation, setProductVariation] = useState<ProductVariation | null>(null)
-    let [subProductVariations, setSubProductVariations] = useState<SubProductVariation[] | null>(null)
+    let [subProductVariations, setSubProductVariations] = useState<SubProductVariation[]>([])
+    let [productVariations, setProductVariations] = useState<ProductVariation[]>([])
     let [subProductVariation, setSubProductVariation] = useState<SubProductVariation | null>(null)
-    let [productVariations, setProductVariations] = useState<ProductVariation[] | null>(null)
 
     const productContext = useProductContext()
+    const cartContext = useCart()
     useEffect(() => {
         const fetchData = async () => {
             let subProductVariations = await productContext.fetchSubProductVarsByProductVarId(Number(id))
@@ -54,10 +55,11 @@ export default function ProductDetails({ params }: Props) {
         }
     }
 
-    const handleChangeProductVariation = async (id: number) => {
-
+    const handleAddItem = async () => {
+        if (subProductVariation) {
+            await cartContext.fetchAddItem(subProductVariation.id)
+        }
     }
-
 
     return (
         <div>
@@ -101,6 +103,8 @@ export default function ProductDetails({ params }: Props) {
                             </div>
                         ))}
                     </div>
+                    <button onClick={() => handleAddItem()}>Add to cart</button>
+
                 </div>
             ) : <></>}
         </div>

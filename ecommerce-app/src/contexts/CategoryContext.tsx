@@ -12,8 +12,7 @@ interface CategoryProviderProps {
     children: ReactNode
 }
 
-const baseUrl1 = 'https://localhost:7041/ParentCategory'
-const baseUrl2 = 'https://localhost:7041/Category'
+const baseUrl = 'https://localhost:7041/ParentCategory'
 
 export const CategoryContext = createContext<CategoryContextType>({
     fetchParentCategoriesByGender: async () => []
@@ -28,7 +27,7 @@ export default function CategoryProvider({ children }: CategoryProviderProps) {
 
     const fetchParentCategoriesByGender = async (gender: Gender) => {
         try {
-            const url = `${baseUrl1}/Gender/${gender}`
+            const url = `${baseUrl}/Gender/${gender}`
             const response = await fetch(url)
             const data = await response.json()
             // setProducts(data)

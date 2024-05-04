@@ -1,11 +1,14 @@
 'use client'
 
+import { BaseInput } from "@/components/unknown/CustomForms"
+import { TextSmall } from "@/components/unknown/CustomTexts"
 import { useAuth } from "@/contexts/AuthContext"
 import { getToken } from "@/functions/storage"
 import { User } from "@/types/User"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-
+import styles from './login.module.css'
+import { PrimaryButton } from "@/components/unknown/CustomButton"
 export default function Login() {
 
     const [user, setUser] = useState<User>({
@@ -49,17 +52,21 @@ export default function Login() {
 
     return (
         <div>
-            <input
-                type="email"
-                value={user.email}
-                onChange={(e) => handleChangeEmail(e.target.value)}
-                placeholder="Enter email" />
-            <input
-                type="password"
-                value={user.password}
-                onChange={(e) => handleChangePassword(e.target.value)}
-                placeholder="Enter password" />
-            <button onClick={handleLogin}>Login</button>
+            <div className={styles.inputContainer}>
+                <TextSmall>Email address</TextSmall>
+                <BaseInput type="email"
+                    value={user.email}
+                    onChange={(e) => handleChangeEmail(e.target.value)}
+                    placeholder="Enter email" />
+            </div>
+            <div className={styles.inputContainer}>
+                <TextSmall>Password</TextSmall>
+                <BaseInput type="password"
+                    value={user.password}
+                    onChange={(e) => handleChangePassword(e.target.value)}
+                    placeholder="Enter password" />
+            </div>
+            <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
         </div>
     )
 }

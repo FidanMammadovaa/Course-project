@@ -7,7 +7,7 @@ export type Product =
     make: string,
     fabric: string,
     description: string,
-    productVariations: ProductVariation
+    productVariations: ProductVariation[]
 
 }
 

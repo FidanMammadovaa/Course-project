@@ -1,10 +1,12 @@
 'use client'
 import { getToken, removeToken, removeUserId, setToken, setUserId } from "@/functions/storage";
 import { User } from "@/types/User";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 
 type AuthContextType = {
+    currentSlot: string,
+    setCurrentSlot: (slot: string) => void,
     fetchSignUpUser: (user: User) => Promise<void>
     fetchLoginUser: (user: User) => Promise<void>
     fetchLogout: () => Promise<void>
@@ -17,6 +19,8 @@ interface AuthProviderProps {
 const baseUrl = 'https://localhost:7041/User'
 
 export const AuthContext = createContext<AuthContextType>({
+    currentSlot: '',
+    setCurrentSlot: () => {},
     fetchSignUpUser: async (user: User) => { },
     fetchLoginUser: async (user: User) => { },
     fetchLogout: async () => { }
@@ -28,6 +32,7 @@ export const useAuth = () => {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
 
+    let [currentSlot, setCurrentSlot] = useState<string>("login")
     const fetchSignUpUser = async (user: User) => {
         try {
             const url = `${baseUrl}/Registration`
@@ -105,7 +110,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     }
 
-    const contextValue: AuthContextType = { fetchLoginUser, fetchSignUpUser, fetchLogout }
+    const contextValue: AuthContextType = { currentSlot, setCurrentSlot, fetchLoginUser, fetchSignUpUser, fetchLogout }
     return (
         <AuthContext.Provider value={contextValue}>
             {children}

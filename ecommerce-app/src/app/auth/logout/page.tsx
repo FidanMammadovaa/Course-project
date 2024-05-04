@@ -23,7 +23,7 @@ export default function LogOut() {
 
     const handleLogOut = async () => {
         await authContext.fetchLogout()
-        router.push('/login')
+        router.push('/auth')
     }
 
     return (

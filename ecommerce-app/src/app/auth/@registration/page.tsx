@@ -1,12 +1,15 @@
 'use client'
 
+import { PrimaryButton } from "@/components/unknown/CustomButton"
+import { BaseInput } from "@/components/unknown/CustomForms"
+import { TextSmall } from "@/components/unknown/CustomTexts"
 import { useAuth } from "@/contexts/AuthContext"
 import { getToken } from "@/functions/storage"
 import { comparePasswords } from "@/functions/validation"
 import { User } from "@/types/User"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-
+import styles from './registration.module.css'
 export default function Registration() {
 
     const [user, setUser] = useState<User>({
@@ -60,23 +63,33 @@ export default function Registration() {
 
 
     return (
-        <div>
-            <input
-                type="email"
-                value={user.email}
-                onChange={(e) => handleChangeEmail(e.target.value)}
-                placeholder="Enter email" />
-            <input
-                type="password"
-                value={user.password}
-                onChange={(e) => handleChangePassword(e.target.value)}
-                placeholder="Enter password" />
-            <input
-                type="password"
-                value={user.repeat}
-                onChange={(e) => handleChangeRepeat(e.target.value)}
-                placeholder="Repeat password" />
-            <button onClick={handleRegister}>Register</button>
+        <div className={styles.mainContainer}>
+            <div className={styles.inputContainer}>
+                <TextSmall>Email address</TextSmall>
+                <BaseInput type="email"
+                    value={user.email}
+                    onChange={(e) => handleChangeEmail(e.target.value)}
+                    placeholder="Enter email" />
+            </div>
+            <div className={styles.inputContainer}>
+                <TextSmall>Password</TextSmall>
+                <BaseInput type="password"
+                    value={user.password}
+                    onChange={(e) => handleChangePassword(e.target.value)}
+                    placeholder="Enter password" />
+            </div>
+            <div className={styles.inputContainer}>
+                <TextSmall>Confirm</TextSmall>
+                <BaseInput
+                    type="password"
+                    value={user.repeat}
+                    onChange={(e) => handleChangeRepeat(e.target.value)}
+                    placeholder="Confirm password" />
+            </div>
+            <div className={styles.buttonContainer}>
+                <PrimaryButton onClick={handleRegister}>Register</PrimaryButton>
+            </div>
         </div>
+        
     )
 }

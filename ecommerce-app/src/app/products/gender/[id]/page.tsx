@@ -2,6 +2,7 @@
 
 import { useProductContext } from "@/contexts/ProductContext"
 import { Product } from "@/types/Product"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 interface Props {
@@ -30,12 +31,20 @@ export default function ProductsByGender({ params }: Props) {
 
     return (
         <div>
-            {products.length > 0 ? products.map((product) =>
-            (
-                <div key={product.id}>
-                    {product.name}
-                </div>
-            )) : <></>}
+            {products.length > 0 ?
+                (products.map((product) =>
+                (
+                    product.productVariations.map((productVariation) =>
+                    (
+                        <div key={productVariation.id}>
+                            {product.name}
+                            <Link href={`/products/${productVariation.id}`}>
+                                <img style={{ width: 300, height: 300 }} src={`data:image/jpeg;base64,${productVariation.productImages[0].imageData}`} alt={product.name}/>
+                            </Link>
+                        </div>
+                    ))
+                ))
+                ) : <></>}
         </div>
     )
 }

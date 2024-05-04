@@ -4,8 +4,9 @@ import { ReactNode, createContext, useContext, useState } from "react";
 
 
 type ProductContextType = {
-    products: Product[]
+    products: Product[],
     fetchProductVariations: () => Promise<ProductVariation[]>,
+    fetchProductsByCategoryId: (id: number) => Promise<Product[]>,
     fetchSubProductVarById: (id: number) => Promise<SubProductVariation>,
     fetchProductVarById: (id: number) => Promise<ProductVariation>,
     fetchProductVariationsByProductId: (id: number) => Promise<ProductVariation[]>,
@@ -24,6 +25,7 @@ const baseUrl3 = 'https://localhost:7041/SubProductVariation'
 export const ProductContext = createContext<ProductContextType>({
     products: [],
     fetchProductVariations: async () => [],
+    fetchProductsByCategoryId: async (id: number) => [],
     fetchSubProductVarById: async (id: number) => ({} as SubProductVariation),
     fetchProductVarById: async (id: number) => ({} as ProductVariation),
     fetchProductVariationsByProductId: async (id: number) => [],
@@ -116,8 +118,6 @@ export default function ProductProvider({ children }: ProductProviderProps) {
         }
     }
 
-
-
     const fetchProductVariationsByProductId = async (id: number) => {
         try {
             const url = `${baseUrl2}/Product/${id}`
@@ -134,7 +134,23 @@ export default function ProductProvider({ children }: ProductProviderProps) {
         }
     }
 
-    const contextValue: ProductContextType = { products, fetchSubProductVarById, fetchProductVarById, fetchProductVariationsByProductId, fetchSubProductVarsByProductVarId, fetchProductVariations, fetchProductsByGender }
+    const fetchProductsByCategoryId = async (id: number) => {
+        try {
+            const url = `${baseUrl1}/Category/${id}`
+            const response = await fetch(url)
+            const data = await response.json()
+            console.log(data);
+
+            // setProducts(data)
+            return data
+        }
+        catch (error) {
+            console.log("Error occured: ", error);
+            throw error;
+        }
+    }
+
+    const contextValue: ProductContextType = { products, fetchSubProductVarById, fetchProductsByCategoryId, fetchProductVarById, fetchProductVariationsByProductId, fetchSubProductVarsByProductVarId, fetchProductVariations, fetchProductsByGender }
     return (
         <ProductContext.Provider value={contextValue}>
             {children}

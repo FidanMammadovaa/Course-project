@@ -12,6 +12,8 @@ export default function Cart() {
     useEffect(() => {
         const fetchData = async () => {
             let items = await cartContext.fetchGetAllItems()
+            console.log(items);
+            
             setItems(items)
         }
         fetchData()

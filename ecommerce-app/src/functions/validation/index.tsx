@@ -2,7 +2,7 @@ import { User } from "@/types/User";
 
 
 export const comparePasswords = (user: User) => {
-    if (user.password === user.confirm) {
+    if (user.password === user.repeat) {
         return true
     }
     return false

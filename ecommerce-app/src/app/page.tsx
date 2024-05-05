@@ -13,7 +13,9 @@ export default function Home() {
     <main>
       <PrimaryButton onClick={handleClick}>Primary Button</PrimaryButton>
       <SecondaryButton onClick={handleClick}>Outlined Button</SecondaryButton>
-      <Grid></Grid>
+      {/* <Grid>
+        <></>
+      </Grid> */}
     </main>
   );
 }

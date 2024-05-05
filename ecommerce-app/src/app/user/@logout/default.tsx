@@ -1,12 +1,12 @@
 'use client'
 
-import { useAuth } from "@/contexts/AuthContext"
+import { useUserContext } from "@/contexts/UserContext"
 import { getToken } from "@/functions/storage"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function LogOut() {
-    let authContext = useAuth()
+    let userContext = useUserContext()
 
     let router = useRouter()
 
@@ -22,7 +22,7 @@ export default function LogOut() {
     }, [])
 
     const handleLogOut = async () => {
-        await authContext.fetchLogout()
+        await userContext.fetchLogout()
         router.push('/auth')
     }
 

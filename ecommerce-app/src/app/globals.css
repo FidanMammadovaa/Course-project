@@ -55,3 +55,8 @@ nav,
 footer {
   padding: 20px 40px;
 }
+
+.activeLink
+{
+  color: #248cd8;
+}

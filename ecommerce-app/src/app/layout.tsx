@@ -7,6 +7,7 @@ import ProductProvider from "@/contexts/ProductContext";
 import CategoryProvider from "@/contexts/CategoryContext";
 import CartProvider from "@/contexts/CartContext";
 import OrderProvider from "@/contexts/OrderContext";
+import UserProvider from "@/contexts/UserContext";
 
 
 export const metadata: Metadata = {
@@ -25,13 +26,15 @@ export default function RootLayout({
         <AuthProvider>
           <ProductProvider>
             <CategoryProvider>
-              <CartProvider>
-                <OrderProvider>
-                  <Layout>
-                    {children}
-                  </Layout>
-                </OrderProvider>
-              </CartProvider>
+              <UserProvider>
+                <CartProvider>
+                  <OrderProvider>
+                    <Layout>
+                      {children}
+                    </Layout>
+                  </OrderProvider>
+                </CartProvider>
+              </UserProvider>
             </CategoryProvider>
           </ProductProvider>
         </AuthProvider>

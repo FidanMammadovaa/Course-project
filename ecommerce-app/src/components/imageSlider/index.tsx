@@ -1,7 +1,6 @@
-"use client";
-import styles from "./grid.module.css";
+import styles from "./imageSlider.module.css";
 import { ChildrenProps } from "@/types/ComponentsTypes";
 
-export default function Grid({ children }: ChildrenProps) {
+export default function ImageSlider({ children }: ChildrenProps) {
   return <div className={styles.mainContainer}>{children}</div>;
 }

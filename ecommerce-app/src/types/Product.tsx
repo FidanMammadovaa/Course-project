@@ -17,7 +17,7 @@ export type ProductVariation = {
     color: Color,
     product: Product
     productImages: ProductImage[],
-    subProductVariations: SubProductVariation
+    subProductVariations: SubProductVariation[]
 }
 
 export type ProductImage = 

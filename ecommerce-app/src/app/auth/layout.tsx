@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext"
 import { ReactNode } from "react"
 import Header from "./header"
 import styles from './layout.module.css'
+
 interface Props {
     children: ReactNode
     login: ReactNode,
@@ -11,21 +12,27 @@ interface Props {
 
 export default function Layout({ children, login, registration }: Props) {
     const authContext = useAuth()
+
     return (
-        <>
-            <div className={styles.mainContainer}>
-                <Header />
-                {authContext.currentSlot === 'login' ? (
+        <div>
+            {authContext.currentSlot === 'login' ? (
+                <div className={styles.mainContainer}>
+                    <Header />
                     <div>
                         {login}
                     </div>
-                ) : (
+                </div>
+            ) : (
+                <div className={styles.mainContainer}>
+                    <Header />
                     <div>
                         {registration}
                     </div>
-                )}
+                </div>
+            )}
+            <div>
+                {children}
             </div>
-            {children}
-        </ >
+        </div>
     )
 }

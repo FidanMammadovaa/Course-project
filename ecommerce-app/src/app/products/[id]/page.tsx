@@ -57,6 +57,8 @@ export default function ProductDetails({ params }: Props) {
 
     const handleAddItem = async () => {
         if (subProductVariation) {
+            console.log(subProductVariation);
+            
             await cartContext.fetchAddItem(subProductVariation.id)
         }
     }
